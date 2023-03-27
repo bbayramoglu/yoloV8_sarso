@@ -1,1 +1,5 @@
-# yoloV8_sarso
+# YOLOv8 SARSILMAZ IHA KAYNAK KODLARI
+
+
+
+
