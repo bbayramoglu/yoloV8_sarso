@@ -109,5 +109,5 @@ while True:
 cap.release()
 if args.kaydet:
     cap_out.release()
-    print(colorstr('bright_green', 'bold', f'Video Kaydedildi -> {path0}'))
+    print(colorstr('green', 'bold', f'Video Kaydedildi -> {path0}'))
 cv2.destroyAllWindows()
