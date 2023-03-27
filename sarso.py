@@ -100,7 +100,7 @@ while True:
     if args.kaydet:
         cap_out.write(frame)
 
-    cv2.imshow("GoruntuIsleme", frame)
+    cv2.imshow("-ObjectDetection", frame)
 
     # Terminate run when "Q" pressed
     if cv2.waitKey(1) == ord("q"):
