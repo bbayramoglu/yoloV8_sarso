@@ -1,4 +1,4 @@
-# Ultralytics requirements
+# sarso_yolov8 requirements
 # Usage: pip install -r requirements.txt
 
 # Base ----------------------------------------
@@ -7,3 +7,5 @@ scikit-learn
 tensorflow
 scikit-image
 filterpy
+torch
+opencv-python
