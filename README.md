@@ -4,7 +4,7 @@
 <summary>INSTALLATION</summary>
 
 ```bash
-pip install ultralytics
+pip install -r requirements.txt
 ```
 <details open>
 <summary>USAGE</summary>
