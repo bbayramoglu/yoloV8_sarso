@@ -10,5 +10,5 @@ pip install -r requirements.txt
 <summary>USAGE</summary>
 
 ```bash
-python sarso.py --weights <your .pt file> --kaynak <source> 
+python sarso.py --weights <your .pt file> --source <source> 
 ```

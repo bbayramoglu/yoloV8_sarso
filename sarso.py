@@ -22,16 +22,16 @@ args = arg()
 print(args)
 
 kontrolcu(args.weights)
-path0 = f'videolar/{args.isim}{len(os.listdir("videolar/"))}.MP4'
+path0 = f'videolar/{args.name}{len(os.listdir("videolar/"))}.MP4'
 
-if args.datagonder:
+if args.send_data:
     serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serv.bind((args.socketip, 8080))
     serv.listen(5)
-cap = cv2.VideoCapture(0 if args.kaynak == "0" else args.kaynak)
+cap = cv2.VideoCapture(0 if args.source == "0" else args.source)
 _, frame = cap.read()
 # video kaydedici başlatma
-if args.kaydet:
+if args.save_vid:
     cap_out = cv2.VideoWriter(path0, cv2.VideoWriter_fourcc(*'mp4v'), 24, (frame.shape[1], frame.shape[0]))
 
 # load a pretrained YOLOv8n model
@@ -40,7 +40,7 @@ model = YOLO(f"weights/{args.weights}", "v8")
 # Vals to resize video frames | small frame optimise the run
 frame_wid = 640
 frame_hyt = 480
-if args.siniflar:
+if args.names:
     print(model.names)
 
 detection_colors = []
@@ -62,7 +62,7 @@ while True:
         print("Can't receive frame (stream end?). Exiting ...")
         break
 
-    detect_params = model.predict(source=[frame], conf=args.oran, save=False)
+    detect_params = model.predict(source=[frame], conf=args.conf, save=False)
 
     DP = detect_params[0].cpu().numpy()
 
@@ -83,21 +83,21 @@ while True:
                      "oran": round(float(conf), 2),
                      "sinif": str(model.names[int(clsID)])
                      }
-            if args.yazdir:
+            if args.show:
                 print(infos)
 
-            if args.datagonder:
+            if args.send_data:
                 jsonStr = json.dumps(infos)
                 clientsocket, address = serv.accept()
                 print(f"Connection from {address} has been established.")
                 clientsocket.send(bytes(jsonStr, "utf-8"))
                 clientsocket.close()
-
-            bb_cizdir(xyxy, frame, color=detection_colors[int(clsID)], label=str(model.names[int(clsID)]),
-                      oran=str(round(float(conf), 2)))
+            if str(model.names[int(clsID)]) in args.classes if args.classes != None else model.names  :
+                bb_cizdir(xyxy, frame, color=detection_colors[int(clsID)], label=str(model.names[int(clsID)]),
+                          oran=str(round(float(conf), 2)))
 
     # video kaydedici
-    if args.kaydet:
+    if args.save_vid:
         cap_out.write(frame)
 
     cv2.imshow("-ObjectDetection-", frame)
@@ -107,7 +107,7 @@ while True:
         break
 
 cap.release()
-if args.kaydet:
+if args.save_vid:
     cap_out.release()
     print(colorstr('green', 'bold', f'Video Kaydedildi -> {path0}'))
 cv2.destroyAllWindows()
