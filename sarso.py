@@ -22,7 +22,7 @@ args = arg()
 print(args)
 
 kontrolcu(args.weights)
-path0 = f'videolar/{args.name}{len(os.listdir("videolar/"))}.MP4'
+path0 = f'videos/{args.name}{len(os.listdir("videos/"))}.MP4'
 
 if args.send_data:
     serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
