@@ -21,7 +21,7 @@ if device.type == 'cuda':
 
 args = arg()
 print(args)
-
+s = 0 if args.source == "0" else args.source
 kontrolcu(args.weights)
 path0 = f'videos/{args.name}{len(os.listdir("videos/"))}.MP4'
 
@@ -29,7 +29,7 @@ if args.send_data:
     serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serv.bind((args.socketip, 8080))
     serv.listen(5)
-cap = cv2.VideoCapture(0 if args.source == "0" else args.source)
+cap = cv2.VideoCapture(s)
 _, frame = cap.read()
 # video kaydedici başlatma
 if args.save_vid:
