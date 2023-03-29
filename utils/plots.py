@@ -1,4 +1,4 @@
-def bb_cizdir(xyxy, image, oran, color=None, label=None, line_thickness=None ):
+def bb_plot(xyxy, image, oran, color=None, label=None, line_thickness=None ):
     import cv2
     import random
     # Frame üzrine bb cizdir

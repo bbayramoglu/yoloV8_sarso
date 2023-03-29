@@ -1,4 +1,4 @@
-def kontrolcu(args0):
+def checker(args0):
     import torch, os
     from pathlib import Path
     p = Path.cwd().joinpath('weights')

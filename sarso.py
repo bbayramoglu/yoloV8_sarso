@@ -7,8 +7,8 @@ import ultralytics
 import os
 import socket
 import json
-from utils.plots import bb_cizdir, colorstr
-from utils.kontrol import kontrolcu
+from utils.plots import bb_plot, colorstr
+from utils.check import checker
 from utils.pars import arg
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -22,7 +22,7 @@ if device.type == 'cuda':
 args = arg()
 print(args)
 s = 0 if args.source == "0" else args.source
-kontrolcu(args.weights)
+checker(args.weights)
 path0 = f'videos/{args.name}{len(os.listdir("videos/"))}.MP4'
 
 if args.send_data:
@@ -94,7 +94,7 @@ while True:
                 clientsocket.send(bytes(jsonStr, "utf-8"))
                 clientsocket.close()
             if str(model.names[int(clsID)]) in args.classes if args.classes != None else model.names  :
-                bb_cizdir(xyxy, frame, color=detection_colors[int(clsID)], label=str(model.names[int(clsID)]),
+                bb_plot(xyxy, frame, color=detection_colors[int(clsID)], label=str(model.names[int(clsID)]),
                           oran=str(round(float(conf), 2)))
 
     # video kaydedici
