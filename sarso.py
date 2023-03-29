@@ -29,18 +29,21 @@ if args.send_data:
     serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serv.bind((args.socketip, 8080))
     serv.listen(5)
-cap = cv2.VideoCapture(s)
-_, frame = cap.read()
-# video kaydedici başlatma
-if args.save_vid:
-    cap_out = cv2.VideoWriter(path0, cv2.VideoWriter_fourcc(*'mp4v'), 24, (frame.shape[1], frame.shape[0]))
-
-# load a pretrained YOLOv8n model
-model = YOLO(f"weights/{args.weights}", "v8")
 
 # Vals to resize video frames | small frame optimise the run
 frame_wid = 640
 frame_hyt = 480
+
+cap = cv2.VideoCapture(s)
+_, frame = cap.read()
+# video kaydedici başlatma
+if args.save_vid:
+    cap_out = cv2.VideoWriter(path0, cv2.VideoWriter_fourcc(*'mp4v'), 24, (frame_wid, frame_hyt))
+
+# load a pretrained YOLOv8n model
+model = YOLO(f"weights/{args.weights}", "v8")
+
+
 if args.names:
     print(model.names)
 
