@@ -38,7 +38,7 @@ cap = cv2.VideoCapture(s)
 _, frame = cap.read()
 # video kaydedici başlatma
 if args.save_vid:
-    cap_out = cv2.VideoWriter(path0, cv2.VideoWriter_fourcc(*'mp4v'), 24, (frame_wid, frame_hyt))
+    cap_out = cv2.VideoWriter(path0, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_wid, frame_hyt))
 
 # load a pretrained YOLOv8n model
 model = YOLO(f"weights/{args.weights}", "v8")
