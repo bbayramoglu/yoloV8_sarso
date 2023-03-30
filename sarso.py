@@ -78,14 +78,14 @@ while True:
             clsID = box.cls.cpu().numpy()[0]
             conf = box.conf.cpu().numpy()[0]
             bb = box.xyxy.cpu().numpy()[0]
-            merkez_nokta = (
+            center_point = (
             int((int(bb[2]) - int(bb[0])) / 2) + int(bb[0]), int((int(bb[3]) - int(bb[1])) / 2) + int(bb[1]))
             xyxy = [int(bb[0]), int(bb[1]), int(bb[2]), int(bb[3])]
             infos = {"p1": (int(bb[0]), int(bb[1])),
                      "p2": (int(bb[2]), int(bb[3])),
-                     "merkez_nokta": merkez_nokta,
-                     "oran": round(float(conf), 2),
-                     "sinif": str(model.names[int(clsID)])
+                     "center_point": center_point,
+                     "conf": round(float(conf), 2),
+                     "class": str(model.names[int(clsID)])
                      }
             if args.show:
                 print(infos)
