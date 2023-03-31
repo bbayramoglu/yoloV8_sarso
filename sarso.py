@@ -31,8 +31,8 @@ if args.send_data:
     serv.listen(5)
 
 # Vals to resize video frames | small frame optimise the run
-frame_wid = 640
-frame_hyt = 480
+frame_wid =  640
+frame_hyt =  480
 
 cap = cv2.VideoCapture(s)
 _, frame = cap.read()
