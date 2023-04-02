@@ -7,6 +7,7 @@ import ultralytics
 import os
 import socket
 import json
+from dronekit import Command, connect, VehicleMode, LocationGlobalRelative, LocationLocal,__init__
 from utils.plots import bb_plot, colorstr
 from utils.check import checker
 from utils.pars import arg
@@ -18,6 +19,12 @@ print()
 if device.type == 'cuda':
     print(colorstr('bright_red', 'bold', f'🚀🚀🚀 {torch.cuda.get_device_name(0)} 🚀🚀🚀'))
     print(ultralytics.checks())
+
+# dronekit kodları
+
+connection_string='/dev/ttyUSB0'
+iha=connect(connection_string,wait_ready=False,timeout=100,baud=57600)
+
 
 args = arg()
 print(args)
@@ -66,6 +73,13 @@ while True:
         print("Can't receive frame (stream end?). Exiting ...")
         break
 
+    #dronekit variables
+
+    lat = iha.location.global_relative_frame.lat
+    long = iha.location.global_relative_frame.lon
+    alt = iha.location.global_relative_frame.alt
+    yaw = iha.attitude.yaw
+
     detect_params = model.predict(source=[frame], conf=args.conf, save=False)
 
     DP = detect_params[0].cpu().numpy()
@@ -85,7 +99,11 @@ while True:
                      "p2": (int(bb[2]), int(bb[3])),
                      "merkez_nokta": merkez_nokta,
                      "oran": round(float(conf), 2),
-                     "sinif": str(model.names[int(clsID)])
+                     "sinif": str(model.names[int(clsID)],),
+                     "lat" : lat,
+                     "long" : long,
+                     "alt" : alt,
+                     "yaw" : yaw
                      }
             if args.show:
                 print(infos)
